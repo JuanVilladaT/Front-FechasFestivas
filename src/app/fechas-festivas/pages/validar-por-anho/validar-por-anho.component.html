@@ -1,0 +1,89 @@
+<mat-sidenav-container fullscreen>
+  <mat-sidenav #sidenav mode="push" [ngStyle]="{ width: '250px' }">
+    <mat-toolbar color="primary">
+      <span>Menú</span>
+      <span class="spacer"></span>
+      <button mat-icon-button (click)="(sidenav.toggle)">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <!-- <mat-nav-list> -->
+    <ul class="list-group">
+      <button class="list-group-item p-3" *ngFor="let item of sidenavItems" [routerLink]="item.route"
+        (click)="sidenav.toggle()" routerLinkActive="active">
+        {{ item.label }}
+      </button>
+    </ul>
+    <!-- </mat-nav-list> -->
+  </mat-sidenav>
+
+  <mat-toolbar color="primary">
+    <button mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="spacer"></span>
+
+    <span>Validador de fechas festivas</span>
+
+    <span class="spacer"></span>
+  </mat-toolbar>
+  <div class="container p-2">
+
+
+
+
+
+    <br />
+    <div class="d-flex">
+      <span class="spacer"></span>
+      <p-floatLabel>
+        <p-calendar #calendar [(ngModel)]="date" inputId="message" view="year" dateFormat="yy" />
+        <label for="message">Seleccione un año</label>
+      </p-floatLabel>
+      <p-button (onClick)="validarFestivo()" label="Submit" />
+      <span class="spacer"></span>
+    </div>
+    <br />
+
+    <div *ngIf="esFestivo !== ''">
+      <p class="p-3 text-center text-xl">
+        {{ esFestivo }}
+      </p>
+    </div>
+
+    <div class="card" *ngIf="mostrarDiv">
+      <p-table [value]="festivos" [paginator]="true" [rows]="7" [tableStyle]="{ 'min-width': '50rem' }"
+        [rowsPerPageOptions]="[7, 10, 20]">
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 25%">Id</th>
+            <th style="width: 25%">Nombre</th>
+            <th style="width: 25%">Mes</th>
+            <th style="width: 25%">Dia</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-festivo>
+          <tr>
+            <td>{{ festivo.id }}</td>
+            <td>{{ festivo.nombre }}</td>
+            <td>{{ festivo.mes }}</td>
+            <td>{{ festivo.dia }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</mat-sidenav-container>
